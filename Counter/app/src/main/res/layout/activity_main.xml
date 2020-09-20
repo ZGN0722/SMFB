@@ -165,14 +165,24 @@
         android:layout_toRightOf="@id/num2"
     />
     <Button
-        android:id="@+id/more"
-        android:layout_width="105dp"
+        android:id="@+id/more1"
+        android:layout_width="53dp"
         android:layout_height="80dp"
-        android:text="☢"
+        android:text="("
         android:textSize="50dp"
         android:background="#FFFFFF"
         android:layout_below="@id/num1"
     />
+    <Button
+        android:id="@+id/more2"
+        android:layout_width="52dp"
+        android:layout_height="80dp"
+        android:text=")"
+        android:textSize="50dp"
+        android:background="#FFFFFF"
+        android:layout_below="@id/num1"
+        android:layout_toRightOf="@+id/more1"
+        />
     <Button
         android:id="@+id/num0"
         android:layout_width="105dp"
@@ -181,7 +191,7 @@
         android:textSize="50dp"
         android:background="#FFFFFF"
         android:layout_below="@id/num1"
-        android:layout_toRightOf="@id/more"
+        android:layout_toRightOf="@id/more2"
     />
     <Button
         android:id="@+id/point"
