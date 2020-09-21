@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(numArray.length<2) {
             Log.d(tag, "结束");
-            main2.setText(numArray[0]);
+            main2.setText("="+numArray[0]);
             return "";
         }
         Stack<String> s1 = new Stack<>();
@@ -314,11 +315,25 @@ public class MainActivity extends AppCompatActivity {
         }
         if(s1.size()==2)
             cal(s1,s2);
-        if(s1.peek().charAt(s1.peek().length()-1)=='0' && s1.peek().charAt(s1.peek().length()-2)=='.') {
-            st1 = s1.peek().substring(0, s1.peek().length() - 2);
-            s1.pop();
-            s1.push(st1);
+        while(true) {
+            Log.d(tag, String.valueOf(s1.peek().charAt(s1.peek().length() - 1)));
+            if (s1.peek().charAt(s1.peek().length() - 1) == '0' ) {
+                if(s1.peek().charAt(s1.peek().length() - 2) == '.') {
+                    st1 = s1.peek().substring(0, s1.peek().length() - 2);
+                    s1.pop();
+                    s1.push(st1);
+                    break;
+                }
+                //Log.d(tag, "省略");
+                st1 = s1.peek().substring(0, s1.peek().length() - 1);
+                s1.pop();
+                s1.push(st1);
+            } else {
+                //这里有问题
+                break;
+            }
         }
+        Log.d(tag, String.valueOf(s1.peek().length()));
         if(Double.parseDouble(s1.peek())<0) {
             st2 = s1.peek().replace('-', '－');
             s1.pop();
@@ -331,25 +346,25 @@ public class MainActivity extends AppCompatActivity {
         switch (s2.pop()){
             case "×":
                 Log.d(tag, "乘法");
-                s1.push(String.valueOf(Double.parseDouble(s1.pop())*Double.parseDouble(s1.pop())));
+                s1.push(String.valueOf(BigDecimal.valueOf(Double.parseDouble(s1.pop())).multiply(BigDecimal.valueOf(Double.parseDouble(s1.pop())))));
                 break;
             case "÷":
                 Log.d(tag, "除法");
                 double a = Double.parseDouble(s1.pop());
                 double b = Double.parseDouble(s1.pop());
                 //Log.d(tag, String.valueOf(b)+"/"+String.valueOf(a));
-                s1.push(String.valueOf(b/a));
+                s1.push(String.valueOf(BigDecimal.valueOf(b).divide(BigDecimal.valueOf(a))));
                 //Log.d(tag, s1.peek());
                 break;
             case "＋":
                 Log.d(tag, "加法");
-                s1.push(String.valueOf(Double.parseDouble(s1.pop())+Double.parseDouble(s1.pop())));
+                s1.push(String.valueOf(BigDecimal.valueOf(Double.parseDouble(s1.pop())).multiply(BigDecimal.valueOf(Double.parseDouble(s1.pop())))));
                 break;
             case "－":
                 Log.d(tag, "减法");
                 double c = Double.parseDouble(s1.pop());
                 double d = Double.parseDouble(s1.pop());
-                s1.push(String.valueOf(d-c));
+                s1.push(String.valueOf(BigDecimal.valueOf(d).subtract(BigDecimal.valueOf(c))));
                 break;
         }
         return 0;
