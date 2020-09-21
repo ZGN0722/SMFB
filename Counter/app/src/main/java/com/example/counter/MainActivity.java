@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //滑动开关
         main1.setMovementMethod(ScrollingMovementMethod.getInstance());
+        history.setMovementMethod(ScrollingMovementMethod.getInstance());
         //左右滑动
         //main1.setHorizontallyScrolling(true);
 
@@ -62,60 +63,70 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num0.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num1.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num2.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num3.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num4.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num5.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num6.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num7.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num8.getText().toString());
+                cal(main1.getText().toString());
             }
         });
         num9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 main1.setText(main1.getText().toString() + num9.getText().toString());
+                cal(main1.getText().toString());
             }
         });
 
@@ -148,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 main1.setText("");
                 main1.setHint("0");
+                main2.setText("");
             }
         });
         delete.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +167,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (main1.getText().toString().length() > 0) {
                     main1.setText(main1.getText().toString().substring(0, main1.getText().toString().length() - 1));
-                    if (main1.getText().toString().length() == 0)
+                    main2.setText("="+main1.getText().toString());
+                    if (main1.getText().toString().length() == 0) {
                         main1.setHint("0");
+                        main2.setText("");
+                    }
                 }
             }
         });
@@ -190,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
         equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cal(main1.getText().toString());
+                history.setText(history.getText()+""+main1.getText()+""+main2.getText()+"\n");
+                main1.setText(main2.getText().toString().substring(1,main2.getText().toString().length()));
             }
         });
     }
@@ -199,14 +215,21 @@ public class MainActivity extends AppCompatActivity {
         String st1="";
         String st2="";
         for(int i =0;i<str.length();i++) {
-            if (str.charAt(i)=='＋' || str.charAt(i)=='－' || str.charAt(i)=='×' || str.charAt(i)=='÷' || str.charAt(i)=='(' || str.charAt(i)==')')
-                st2 = st2 + str.charAt(i);
-            else
+            if ( str.charAt(i)!='(' && str.charAt(i)!=')')
                 st1 = st1 + str.charAt(i);
         }
-        String[] numArray = st1.split("");
+        for(int i =0;i<str.length();i++) {
+            if ( str.charAt(i)=='×' || str.charAt(i)=='÷' || str.charAt(i)=='＋' || str.charAt(i)=='－' || str.charAt(i)=='(' || str.charAt(i)==')')
+                st2 = st2 + str.charAt(i);
+        }
+        String[] numArray = st1.split("[×÷－＋]");
         String[] charArray = st2.split("");
 
+        if(numArray.length<2) {
+            Log.d(tag, "结束");
+            main2.setText(numArray[0]);
+            return "";
+        }
         Stack<String> s1 = new Stack<>();
         Stack<String> s2 = new Stack<>();
         //Log.d(tag, String.valueOf(charArray.length));
@@ -291,7 +314,17 @@ public class MainActivity extends AppCompatActivity {
         }
         if(s1.size()==2)
             cal(s1,s2);
-        main2.setText(s1.peek());
+        if(s1.peek().charAt(s1.peek().length()-1)=='0' && s1.peek().charAt(s1.peek().length()-2)=='.') {
+            st1 = s1.peek().substring(0, s1.peek().length() - 2);
+            s1.pop();
+            s1.push(st1);
+        }
+        if(Double.parseDouble(s1.peek())<0) {
+            st2 = s1.peek().replace('-', '－');
+            s1.pop();
+            s1.push(st2);
+        }
+        main2.setText("="+s1.peek());
         return "";
     }
     public double cal(Stack<String> s1,Stack<String> s2) {
