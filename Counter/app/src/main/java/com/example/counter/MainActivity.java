@@ -358,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "＋":
                 Log.d(tag, "加法");
-                s1.push(String.valueOf(BigDecimal.valueOf(Double.parseDouble(s1.pop())).multiply(BigDecimal.valueOf(Double.parseDouble(s1.pop())))));
+                s1.push(String.valueOf(BigDecimal.valueOf(Double.parseDouble(s1.pop())).add(BigDecimal.valueOf(Double.parseDouble(s1.pop())))));
                 break;
             case "－":
                 Log.d(tag, "减法");
