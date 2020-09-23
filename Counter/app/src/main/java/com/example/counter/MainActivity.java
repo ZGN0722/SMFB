@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9;
     Button add, sub, more1,more2, empty, delete, percent, division, equal, mult, point;
+    Button sin,cos,tan;
     TextView history, main1, main2;
 
     @Override
@@ -48,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
         equal = findViewById(R.id.equal);
         percent = findViewById(R.id.percent);
         point = findViewById(R.id.point);
+
+        sin = findViewById(R.id.sin);
+        cos = findViewById(R.id.cos);
+        tan = findViewById(R.id.tan);
+
 
         main1 = findViewById(R.id.main1);
         main2 = findViewById(R.id.main2);
@@ -210,6 +216,27 @@ public class MainActivity extends AppCompatActivity {
                 main1.setText(main2.getText().toString().substring(1,main2.getText().toString().length()));
             }
         });
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            sin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString());
+                    main2.setText(String.valueOf((int) Math.sin(Math.PI/2)));
+                }
+            });
+            cos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + cos.getText().toString());
+                }
+            });
+            tan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + tan.getText().toString());
+                }
+            });
+        }
     }
 
     public String cal(String str) {

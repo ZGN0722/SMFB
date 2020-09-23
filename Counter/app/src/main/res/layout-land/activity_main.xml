@@ -6,6 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/sin"
+        android:layout_width="105dp"
+        android:layout_height="52dp"
+        android:text="SIN"
+        android:textSize="30dp"
+        android:textColor="#FF8C00"
+        android:background="#FFFFFF"
+        android:layout_below="@id/main2"
+        android:layout_toRightOf="@+id/division"
+        />
+    <Button
+        android:id="@+id/cos"
+        android:layout_width="105dp"
+        android:layout_height="52dp"
+        android:text="COS"
+        android:textSize="30dp"
+        android:textColor="#FF8C00"
+        android:background="#FFFFFF"
+        android:layout_below="@id/sin"
+        android:layout_toRightOf="@+id/division"
+        />
+    <Button
+        android:id="@+id/tan"
+        android:layout_width="105dp"
+        android:layout_height="52dp"
+        android:text="TAN"
+        android:textSize="30dp"
+        android:textColor="#FF8C00"
+        android:background="#FFFFFF"
+        android:layout_below="@id/cos"
+        android:layout_toRightOf="@+id/division"
+        />
     <TextView
         android:id="@+id/history"
         android:layout_marginTop="0dp"
