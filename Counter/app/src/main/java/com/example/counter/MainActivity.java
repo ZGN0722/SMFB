@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9;
     Button add, sub, more1,more2, empty, delete, percent, division, equal, mult, point;
-    Button sin,cos,tan;
+    Button sin,cos,tan,lg,ln,xy,e,tx,x1;
     TextView history, main1, main2;
 
     @Override
@@ -53,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
         sin = findViewById(R.id.sin);
         cos = findViewById(R.id.cos);
         tan = findViewById(R.id.tan);
-
+        lg = findViewById(R.id.lg);
+        ln = findViewById(R.id.ln);
+        xy = findViewById(R.id.xy);
+        e = findViewById(R.id.e);
+        tx = findViewById(R.id.tx);
+        x1 = findViewById(R.id.x1);
 
         main1 = findViewById(R.id.main1);
         main2 = findViewById(R.id.main2);
@@ -173,7 +179,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (main1.getText().toString().length() > 0) {
-                    main1.setText(main1.getText().toString().substring(0, main1.getText().toString().length() - 1));
+                    if(main1.getText().toString().charAt(main1.getText().toString().length()-2) == 'l')
+                        main1.setText(main1.getText().toString().substring(0, main1.getText().toString().length() - 2));
+                    else if(main1.getText().toString().charAt(main1.getText().toString().length()-1) == 'n'
+                            || main1.getText().toString().charAt(main1.getText().toString().length()-1) == 's')
+                        main1.setText(main1.getText().toString().substring(0, main1.getText().toString().length() - 3));
+                    else
+                        main1.setText(main1.getText().toString().substring(0, main1.getText().toString().length() - 1));
                     main2.setText("="+main1.getText().toString());
                     if (main1.getText().toString().length() == 0) {
                         main1.setHint("0");
@@ -220,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
             sin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    main1.setText(main1.getText().toString());
-                    main2.setText(String.valueOf((int) Math.sin(Math.PI/2)));
+                    main1.setText(main1.getText().toString()+sin.getText().toString());
+                    //main2.setText(String.valueOf((int) Math.sin(Math.PI/2)));
                 }
             });
             cos.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +246,44 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     main1.setText(main1.getText().toString() + tan.getText().toString());
+                }
+            });
+            lg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString()+lg.getText().toString());
+                    //main2.setText(String.valueOf((int) Math.sin(Math.PI/2)));
+                }
+            });
+            ln.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + ln.getText().toString());
+                }
+            });
+            xy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + xy.getText().toString());
+                }
+            });
+            e.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + String.valueOf(Math.E));
+                }
+            });
+            tx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + "√");
+                }
+            });
+            x1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    main1.setText(main1.getText().toString() + "!");
+                    cal(main1.getText().toString());
                 }
             });
         }
@@ -252,9 +302,30 @@ public class MainActivity extends AppCompatActivity {
         }
         String[] numArray = st1.split("[×÷－＋]");
         String[] charArray = st2.split("");
-
+        //Log.d(tag, numArray[0]);
+        Log.d(tag, numArray[0]);
+        for (int i=0;i<numArray.length;i++)
+            if(numArray[i].charAt(0)=='s' ||numArray[i].charAt(0)=='c' || numArray[i].charAt(0)=='t')
+                sct(numArray,i);
+            else if(numArray[i].charAt(0)=='l')
+                let(numArray,i);
+            else if(numArray[i].contains("^"))
+                nl(numArray,i);
+            else if(numArray[i].contains("√")) {
+                double tx = Double.parseDouble(numArray[i].substring(1));
+                tx = Math.sqrt(tx);
+                numArray[i]=String.valueOf(tx);
+            }
+            else if(numArray[i].contains("!")) {
+                int x1 = Integer.parseInt(numArray[i].substring(0,numArray[i].length()-1));
+                Log.d(tag, String.valueOf(x1));
+                int s = 1;
+                for(int j =1 ;j<=x1;j++)
+                    s=s*j;
+                numArray[i]=String.valueOf(s);
+            }
         if(numArray.length<2) {
-            Log.d(tag, "结束");
+            //Log.d(tag, "结束");
             main2.setText("="+numArray[0]);
             return "";
         }
@@ -279,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
         s1.push(numArray[numPointer+1]);
         s2.push(charArray[charPointer]);
          */
+
         numPointer=2;
         charPointer++;
         while (charPointer<charArray.length || numPointer<numArray.length){
@@ -332,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     charPointer++;
                     if(charPointer<=charArray.length) {
-                        Log.d(tag, "8");
+                        //Log.d(tag, "8");
                         cal(s1, s2);
                         s2.push(charArray[charPointer-1]);
                     }
@@ -343,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
         if(s1.size()==2)
             cal(s1,s2);
         while(true) {
-            Log.d(tag, String.valueOf(s1.peek().charAt(s1.peek().length() - 1)));
+            //Log.d(tag, String.valueOf(s1.peek().charAt(s1.peek().length() - 1)));
             if (s1.peek().charAt(s1.peek().length() - 1) == '0' ) {
                 if(s1.peek().charAt(s1.peek().length() - 2) == '.') {
                     st1 = s1.peek().substring(0, s1.peek().length() - 2);
@@ -369,6 +441,7 @@ public class MainActivity extends AppCompatActivity {
         main2.setText("="+s1.peek());
         return "";
     }
+
     public double cal(Stack<String> s1,Stack<String> s2) {
         switch (s2.pop()){
             case "×":
@@ -380,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
                 double a = Double.parseDouble(s1.pop());
                 double b = Double.parseDouble(s1.pop());
                 //Log.d(tag, String.valueOf(b)+"/"+String.valueOf(a));
-                s1.push(String.valueOf(BigDecimal.valueOf(b).divide(BigDecimal.valueOf(a))));
+                s1.push(String.valueOf(BigDecimal.valueOf(b).divide(BigDecimal.valueOf(a),5)));
                 //Log.d(tag, s1.peek());
                 break;
             case "＋":
@@ -395,5 +468,62 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return 0;
+    }
+
+    public void sct(String[] numArray, int i) {
+        switch (numArray[i].charAt(0)){
+            case 's':
+                double x1 = Math.sin((Math.toRadians(Double.parseDouble(numArray[i].substring(3)))));
+                BigDecimal x2 = new BigDecimal(x1);
+                x1 = x2.setScale(15, RoundingMode.HALF_UP).doubleValue();
+                numArray[i] = String.valueOf(x1);
+                break;
+            case 'c':
+                double y1 = Math.cos((Math.toRadians(Double.parseDouble(numArray[i].substring(3)))));
+                BigDecimal y2 = new BigDecimal(y1);
+                y1 = y2.setScale(15, RoundingMode.HALF_UP).doubleValue();
+                numArray[i] = String.valueOf(y1);
+                break;
+            case 't':
+                double z1 = Math.tan((Math.toRadians(Double.parseDouble(numArray[i].substring(3)))));
+                BigDecimal z2 = new BigDecimal(z1);
+                z1 = z2.setScale(15, RoundingMode.HALF_UP).doubleValue();
+                numArray[i] = String.valueOf(z1);
+                break;
+        }
+    }
+    public void let(String[] numArray, int i) {
+        switch (numArray[i].charAt(1)){
+            case 'g':
+                double x1 = Math.log10(Double.parseDouble(numArray[i].substring(2)));
+                BigDecimal x2 = new BigDecimal(x1);
+                x1 = x2.setScale(15, RoundingMode.HALF_UP).doubleValue();
+                numArray[i] = String.valueOf(x1);
+                break;
+            case 'n':
+                double z1 = Math.log(Double.parseDouble(numArray[i].substring(2)))/Math.log(Math.E);
+                BigDecimal z2 = new BigDecimal(z1);
+                z1 = z2.setScale(15, RoundingMode.HALF_UP).doubleValue();
+                numArray[i] = String.valueOf(z1);
+                break;
+        }
+    }
+    //°
+    public void nl(String[] numArray, int i) {
+        double nt1=0,nt2=0;
+        for(int j=0;j<numArray[i].length();j++) {
+            if (numArray[i].charAt(j) == '^') {
+                nt1 = Double.parseDouble(numArray[i].substring(0, j));
+                nt2 = Double.parseDouble(numArray[i].substring(j+1));
+                break;
+            }
+        }
+        Log.d(tag, String.valueOf(nt1));
+        Log.d(tag, String.valueOf(nt2));
+        //Log.d(tag, Arr[1]+"1");
+        double nt = Math.pow(nt1,nt2);
+        BigDecimal nt3 = new BigDecimal(nt);
+        nt = nt3.setScale(15, RoundingMode.HALF_UP).doubleValue();
+        numArray[i] = String.valueOf(nt);
     }
 }
