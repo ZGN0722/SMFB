@@ -35,6 +35,26 @@
 
         />
     <Button
+        android:id="@+id/change"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:text="换算"
+        android:textSize="25dp"
+        android:background="#FFFFFF"
+        />
+
+    <Button
+        android:id="@+id/help"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:text="帮助"
+        android:textSize="25dp"
+        android:gravity="right"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+
+    <Button
         android:id="@+id/empty"
         android:layout_width="105dp"
         android:layout_height="80dp"

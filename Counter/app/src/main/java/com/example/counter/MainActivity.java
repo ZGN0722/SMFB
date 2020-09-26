@@ -2,6 +2,7 @@ package com.example.counter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9;
     Button add, sub, more1,more2, empty, delete, percent, division, equal, mult, point;
     Button sin,cos,tan,lg,ln,xy,e,tx,x1;
+    Button change,help;
     TextView history, main1, main2;
 
     @Override
@@ -64,6 +67,25 @@ public class MainActivity extends AppCompatActivity {
         main1 = findViewById(R.id.main1);
         main2 = findViewById(R.id.main2);
         history = findViewById(R.id.history);
+
+        change = findViewById(R.id.change);
+        help = findViewById(R.id.help);
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            change.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, ChangeActivity.class);
+                    startActivity(intent);
+                }
+            });
+            help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(MainActivity.this, "点击了帮助按钮", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
         //滑动开关
         main1.setMovementMethod(ScrollingMovementMethod.getInstance());

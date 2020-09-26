@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="data" >
+        <item>厘米/cm</item>
+        <item>分米/dm</item>
+        <item>米/m</item>
+    </string-array>
+    <string-array name="data2" >
+        <item>立方厘米/cm³</item>
+        <item>立方分米/dm³</item>
+        <item>立方米/m³</item>
+    </string-array>
+    <string-array name="data3" >
+        <item>二进制</item>
+        <item>八进制</item>
+        <item>十进制</item>
+        <item>十六进制</item>
+    </string-array>
+    <string-array name="data4" >
+        <item>十进制</item>
+        <item>二进制</item>
+        <item>八进制</item>
+        <item>十六进制</item>
+    </string-array>
+</resources>

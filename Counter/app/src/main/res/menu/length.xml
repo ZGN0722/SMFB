@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/cm" android:title="厘米/cm"/>
+    <item android:id="@+id/dm" android:title="分米/dm"/>
+    <item android:id="@+id/m" android:title="米/m"/>
+
+</menu>
