@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ServiceActivity"
+    android:gravity="center_horizontal">
+    <Button
+        android:id="@+id/service1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动"/>
+    <Button
+        android:id="@+id/service2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止"
+        android:layout_below="@+id/service1"/>
+    <Button
+        android:id="@+id/service3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加"
+        android:layout_below="@+id/service2"/>
+    <Button
+        android:id="@+id/service4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="减"
+        android:layout_below="@+id/service3"/>
+    <Button
+        android:id="@+id/service5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="乘"
+        android:layout_below="@+id/service4"/>
+    <Button
+        android:id="@+id/service6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="除"
+        android:layout_below="@+id/service5"/>
+
+</RelativeLayout>
